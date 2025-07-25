@@ -1,0 +1,18 @@
+services:
+  api:
+    container_name: rust-axum-domain
+    build:
+      context: .
+      dockerfile: ./docker/local/rust/Dockerfile
+    command: cargo watch -x run
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    # .env.testing利用時に上書きしたい環境変数を設定する
+    environment:
+      - ENV
+      - PORT
+      - RUST_LOG
+    tty: true
+    stdin_open: true
