@@ -1,12 +1,13 @@
 use chrono::{FixedOffset, TimeZone};
 
+// Arc（ヒープ上に確保されたある値の所有権を、複数のスレッド間で安全に共有するためのスマートポインタ）
+use std::sync::Arc;
+
 // 共通コンテキスト
 use crate::application::usecase::context::context_request::ContextRequest;
 
 // ロガー
-use crate::infrastructure::logger::logger_log::Logger;
-// ロガーを使う場合はトレイトも読み込む
-// use crate::application::usecase::logger::logger_trait::LoggerTrait;
+use crate::application::usecase::logger::logger_trait::LoggerTrait;
 
 // ドメイン
 use crate::domain::{
@@ -17,12 +18,14 @@ use crate::domain::{
 // ユーザーリポジトリの構造体
 pub struct UserRepository {
     pub _db: String, // TODO: 仮でString型にしているが、DBインスタンスに合わせた型に変更する
-    pub _logger: Logger,
+    // Arc<T>型で動的にメモリ領域確保（スレッドセーフな共有所有権）
+    // 'static: オブジェクトのライフタイムがプログラムが終了するまで破棄されない
+    pub _logger: Arc<dyn LoggerTrait + 'static>,
 }
 
 impl UserRepository {
     // 初期化用メソッド
-    pub fn new(db: String, logger: Logger) -> Self {
+    pub fn new(db: String, logger: Arc<dyn LoggerTrait + 'static>) -> Self {
         UserRepository {
             _db: db,
             _logger: logger,

@@ -2,7 +2,7 @@ use chrono::{DateTime, FixedOffset, TimeZone};
 use serde::{Deserialize, Serialize};
 
 // ユーザーモデルの定義
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Clone, Serialize, Deserialize, Debug)]
 pub struct User {
     pub id: i64,
     pub uid: String,

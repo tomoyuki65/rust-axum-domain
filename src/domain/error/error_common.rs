@@ -1,7 +1,7 @@
 use axum::http::StatusCode;
 use thiserror::Error;
 
-#[derive(Error, Debug)]
+#[derive(Clone, Error, Debug)]
 pub enum ErrorCommon {
     #[allow(dead_code)]
     #[error("Internal Server Error")]

@@ -31,16 +31,16 @@ impl AppState {
         let db = new_db_dummy_connection().await.unwrap();
 
         // ロガー設定
-        let logger = Logger::new();
+        let logger = Arc::new(Logger::new());
 
         // リポジトリのインスタンス化
         let user_repo = Arc::new(UserRepository::new(db, logger.clone()));
 
         // Userユースケースのインスタンス化とまとめ
         let user_find_all_repo = UserFindAllRepository {
-            user_repository: user_repo,
+            user_repository: user_repo.clone(),
         };
-        let user_find_all_usecase = UserFindAllUsecase::new(user_find_all_repo, logger);
+        let user_find_all_usecase = UserFindAllUsecase::new(user_find_all_repo, logger.clone());
         let user_usecase = UserUsecase {
             user_find_all: user_find_all_usecase,
         };

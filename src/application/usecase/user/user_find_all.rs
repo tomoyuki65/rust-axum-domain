@@ -20,7 +20,6 @@ use crate::domain::user::user_repository::UserRepositoryTrait;
 
 // ロガー
 use crate::application::usecase::logger::logger_trait::LoggerTrait;
-use crate::infrastructure::logger::logger_log::Logger;
 
 // ユースケース用のトレイト（モック化もできるように定義）
 #[mockall::automock]
@@ -40,12 +39,12 @@ pub struct UserFindAllRepository {
 // ユースケースの構造体
 #[derive(Clone)]
 pub struct UserFindAllUsecase {
-    repo: UserFindAllRepository,
-    logger: Logger,
+    pub repo: UserFindAllRepository,
+    pub logger: Arc<dyn LoggerTrait + 'static>,
 }
 
 impl UserFindAllUsecase {
-    pub fn new(repo: UserFindAllRepository, logger: Logger) -> Self {
+    pub fn new(repo: UserFindAllRepository, logger: Arc<dyn LoggerTrait + 'static>) -> Self {
         UserFindAllUsecase { repo, logger }
     }
 }
