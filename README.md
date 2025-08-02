@@ -106,5 +106,5 @@ docker compose exec -e CARGO_TEST=testing api cargo test -- --nocapture --test-t
 <br />
   
 ## 参考記事  
-[]()  
+[・RustのaxumでDDD（ドメイン駆動設計）構成のバックエンドAPIを開発する方法まとめ](https://rust.tomoyuki65.com/how-to-develop-api-with-ddd-using-axum-in-rust)  
   
